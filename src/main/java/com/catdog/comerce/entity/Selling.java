@@ -1,5 +1,6 @@
 package com.catdog.comerce.entity;
 
+import com.catdog.comerce.enums.SellingState;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -33,9 +34,17 @@ public class Selling {
     @PrePersist
     public void createDateOrder(){
         creationSelling= LocalDateTime.now();
+        sellingState= SellingState.PROCESSING_ORDER;
     }
 
-    @OneToMany(mappedBy = "ordered",cascade = CascadeType.ALL,orphanRemoval = true)
+    @NotNull
+    @Column(name = "order_state",nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SellingState sellingState;
+
+
+
+    @OneToMany(mappedBy = "selling",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<SellingProduct>  sellingProducts = new ArrayList<>();
 
     @PositiveOrZero

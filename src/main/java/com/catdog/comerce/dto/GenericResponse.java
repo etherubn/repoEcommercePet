@@ -1,18 +1,20 @@
-package com.catdog.comerce.dto.response;
+package com.catdog.comerce.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ResponseUserSellingDto {
-    private Long idCustomer;
-    private String name;
-    private String lastName;
-    private String email;
-    private String username;
+public class GenericResponse<T> {
+    private int status;
+    private String message;
+    private List<T> data;
 }

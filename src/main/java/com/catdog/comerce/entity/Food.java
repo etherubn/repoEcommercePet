@@ -11,5 +11,5 @@ public class Food {
 
     //TODO : Ver validacion para 2 decimales
     @Positive
-    private double peso;
+    private double weight;
 }

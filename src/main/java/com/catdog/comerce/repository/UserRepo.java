@@ -8,5 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepo extends RepoGeneric<User,Long> {
-   Optional<User> findByDniOrEmailOrUsername(String dni,String email,String username);
+   Optional<User> findByDni(String dni);
+   Optional<User> findByEmail(String email);
+   Optional<User> findByUsername(String username);
 }

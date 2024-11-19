@@ -1,7 +1,7 @@
 package com.catdog.comerce.exception;
 
 public class AlreadyExistsException extends RuntimeException{
-    public AlreadyExistsException(String entity,String value) {
-        super(String.format("Valor ya existe: %s para el valor '%s'",entity,value));
+    public AlreadyExistsException(String entity,String field,String value) {
+        super(String.format("Value already exist: entity - %s - field %s - value '%s'",entity,field,value));
     }
 }

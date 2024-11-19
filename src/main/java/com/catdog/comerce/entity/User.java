@@ -21,9 +21,9 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_customer")
+    @Column(name = "id_user")
     @EqualsAndHashCode.Include
-    private Long idCustomer;
+    private Long idUser;
 
     @NotBlank
     @Size(max = 30)
@@ -37,6 +37,7 @@ public class User {
 
     @NotBlank
     @Column(unique = true,nullable = false)
+    @Size(min = 8,max = 8)
     private String dni;
 
     @Email

@@ -11,4 +11,5 @@ import java.io.Serializable;
 @Data
 public class ProductDto implements Serializable {
     //TODO:Ver como poner el DTO para productos
+    private Long idProduct;
 }

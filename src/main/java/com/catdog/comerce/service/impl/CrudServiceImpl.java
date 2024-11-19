@@ -4,17 +4,21 @@ import com.catdog.comerce.exception.NotFoundException;
 import com.catdog.comerce.repository.RepoGeneric;
 import com.catdog.comerce.service.ICrudService;
 import com.catdog.comerce.utils.MapperUtil;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @RequiredArgsConstructor
+
+@AllArgsConstructor
 abstract class CrudServiceImpl<Dto,T,ID> implements ICrudService<Dto,ID> {
     protected abstract RepoGeneric<T,ID> getRepo();
     protected abstract Class<T> getEntityClass();
     protected abstract Class<Dto> getDtoClass();
     protected abstract void setId(T entity,ID id);
-    protected final MapperUtil mapperUtil;
+    protected  MapperUtil mapperUtil;
 
     @Override
     public List<Dto> findAll() {

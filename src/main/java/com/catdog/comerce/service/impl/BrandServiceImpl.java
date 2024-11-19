@@ -7,9 +7,11 @@ import com.catdog.comerce.repository.BrandRepo;
 import com.catdog.comerce.repository.RepoGeneric;
 import com.catdog.comerce.service.IBrandService;
 import com.catdog.comerce.utils.MapperUtil;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class BrandServiceImpl extends CrudServiceImpl<BrandDto, Brand,Long> implements IBrandService {
     private BrandRepo brandRepo;
 
@@ -40,7 +42,7 @@ public class BrandServiceImpl extends CrudServiceImpl<BrandDto, Brand,Long> impl
     @Override
     public BrandDto create(BrandDto brandDto) {
         if (brandRepo.findByName(brandDto.getName()).isPresent()){
-            throw new AlreadyExistsException(getEntityClass().getSimpleName(),brandDto.getName());
+            throw new AlreadyExistsException(getEntityClass().getSimpleName(),"name",brandDto.getName());
         }
 
         Brand createdBrand = brandRepo.save(mapperUtil.map(brandDto, Brand.class));
@@ -54,7 +56,7 @@ public class BrandServiceImpl extends CrudServiceImpl<BrandDto, Brand,Long> impl
         Optional<Brand> optionalBrand = brandRepo.findByName(brandDto.getName());
 
         if (optionalBrand.isPresent() && optionalBrand.get().getIdBrand().equals(aLong)){
-            throw new AlreadyExistsException(getEntityClass().getSimpleName(),brandDto.getName());
+            throw new AlreadyExistsException(getEntityClass().getSimpleName(),"name",brandDto.getName());
         }
 
         Brand brand = mapperUtil.map(brandDto, Brand.class);

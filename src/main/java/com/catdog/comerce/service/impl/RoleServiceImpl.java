@@ -7,9 +7,11 @@ import com.catdog.comerce.repository.RoleRepo;
 import com.catdog.comerce.repository.RepoGeneric;
 import com.catdog.comerce.service.IRoleService;
 import com.catdog.comerce.utils.MapperUtil;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class RoleServiceImpl extends CrudServiceImpl<RoleDto, Role,Long> implements IRoleService {
     private RoleRepo roleRepo;
 
@@ -40,7 +42,7 @@ public class RoleServiceImpl extends CrudServiceImpl<RoleDto, Role,Long> impleme
     @Override
     public RoleDto create(RoleDto roleDto) {
         if (roleRepo.findByType(roleDto.getType()).isPresent()){
-            throw new AlreadyExistsException(getEntityClass().getSimpleName(),roleDto.getType().getValue());
+            throw new AlreadyExistsException(getEntityClass().getSimpleName(),"role name",roleDto.getType().getValue());
         }
 
         Role createdRole = roleRepo.save(mapperUtil.map(roleDto, Role.class));
@@ -54,7 +56,7 @@ public class RoleServiceImpl extends CrudServiceImpl<RoleDto, Role,Long> impleme
         Optional<Role> optionalRole = roleRepo.findByType(roleDto.getType());
 
         if (optionalRole.isPresent() && optionalRole.get().getIdRole().equals(aLong)){
-            throw new AlreadyExistsException(getEntityClass().getSimpleName(),roleDto.getType().getValue());
+            throw new AlreadyExistsException(getEntityClass().getSimpleName(),"role name",roleDto.getType().getValue());
         }
 
         Role role = mapperUtil.map(roleDto, Role.class);

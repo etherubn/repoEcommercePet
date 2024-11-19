@@ -7,9 +7,11 @@ import com.catdog.comerce.repository.CategoryRepo;
 import com.catdog.comerce.repository.RepoGeneric;
 import com.catdog.comerce.service.ICategoryService;
 import com.catdog.comerce.utils.MapperUtil;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class CategoryServiceImpl extends CrudServiceImpl<CategoryDto, Category,Long> implements ICategoryService {
     private CategoryRepo categoryRepo;
 
@@ -40,7 +42,7 @@ public class CategoryServiceImpl extends CrudServiceImpl<CategoryDto, Category,L
     @Override
     public CategoryDto create(CategoryDto categoryDto) {
         if (categoryRepo.findByType(categoryDto.getType()).isPresent()){
-            throw new AlreadyExistsException(getEntityClass().getSimpleName(),categoryDto.getType().getValue());
+            throw new AlreadyExistsException(getEntityClass().getSimpleName(),"type",categoryDto.getType().getValue());
         }
 
         Category createdCategory = categoryRepo.save(mapperUtil.map(categoryDto, Category.class));
@@ -54,7 +56,7 @@ public class CategoryServiceImpl extends CrudServiceImpl<CategoryDto, Category,L
         Optional<Category> optionalCategory = categoryRepo.findByType(categoryDto.getType());
 
         if (optionalCategory.isPresent() && optionalCategory.get().getIdCategory().equals(aLong)){
-            throw new AlreadyExistsException(getEntityClass().getSimpleName(),categoryDto.getType().getValue());
+            throw new AlreadyExistsException(getEntityClass().getSimpleName(),"type",categoryDto.getType().getValue());
         }
 
         Category category = mapperUtil.map(categoryDto, Category.class);
