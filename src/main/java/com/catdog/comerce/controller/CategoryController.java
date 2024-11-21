@@ -53,7 +53,7 @@ public class CategoryController {
     @PutMapping("/{id}")
     public ResponseEntity<GenericResponse<ResponseCategoryDto>> updateCategory(@RequestBody @Valid CategoryDto categoryDto,@PathVariable Long id){
         ResponseCategoryDto responseCategoryDto = mapperUtil.map(categoryService.update(categoryDto,id), ResponseCategoryDto.class);
-        return new ResponseEntity<>(new GenericResponse<ResponseCategoryDto>(201,"success",Arrays.asList(responseCategoryDto)),HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse<ResponseCategoryDto>(200,"success",Arrays.asList(responseCategoryDto)),HttpStatus.OK);
     }
 
 

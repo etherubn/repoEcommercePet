@@ -57,6 +57,11 @@ public class User {
     @Column(updatable = false,nullable = false,name = "creation_date")
     private LocalDateTime creationDate;
 
+    @PrePersist
+    public void setBeforePersist(){
+        creationDate = LocalDateTime.now();
+    }
+
     //Todo
     //Debeiniciar en 0
     //luego de realizar la compra aumentar

@@ -53,7 +53,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<GenericResponse<ResponseUserDto>> updateUser(@RequestBody @Valid UserDto userDto,@PathVariable Long id){
         ResponseUserDto responseUserDto = mapperUtil.map(userService.update(userDto,id), ResponseUserDto.class);
-        return new ResponseEntity<>(new GenericResponse<ResponseUserDto>(201,"success",Arrays.asList(responseUserDto)),HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse<ResponseUserDto>(200,"success",Arrays.asList(responseUserDto)),HttpStatus.OK);
     }
 
 

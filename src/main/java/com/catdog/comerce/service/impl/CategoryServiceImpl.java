@@ -3,6 +3,7 @@ package com.catdog.comerce.service.impl;
 import com.catdog.comerce.dto.request.CategoryDto;
 import com.catdog.comerce.entity.Category;
 import com.catdog.comerce.exception.AlreadyExistsException;
+import com.catdog.comerce.exception.NotFoundException;
 import com.catdog.comerce.repository.CategoryRepo;
 import com.catdog.comerce.repository.RepoGeneric;
 import com.catdog.comerce.service.ICategoryService;
@@ -11,12 +12,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
 @Service
 public class CategoryServiceImpl extends CrudServiceImpl<CategoryDto, Category,Long> implements ICategoryService {
-    private CategoryRepo categoryRepo;
+    private final CategoryRepo categoryRepo;
 
-    public CategoryServiceImpl(MapperUtil mapperUtil) {
+    public CategoryServiceImpl(MapperUtil mapperUtil,CategoryRepo categoryRepo) {
         super(mapperUtil);
+        this.categoryRepo=categoryRepo;
     }
 
     @Override
@@ -53,6 +56,8 @@ public class CategoryServiceImpl extends CrudServiceImpl<CategoryDto, Category,L
 
     @Override
     public CategoryDto update(CategoryDto categoryDto, Long aLong) {
+        categoryRepo.findById(aLong).orElseThrow(()-> new NotFoundException("category",aLong));
+
         Optional<Category> optionalCategory = categoryRepo.findByType(categoryDto.getType());
 
         if (optionalCategory.isPresent() && optionalCategory.get().getIdCategory().equals(aLong)){

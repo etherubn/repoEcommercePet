@@ -53,7 +53,7 @@ public class RoleController {
     @PutMapping("/{id}")
     public ResponseEntity<GenericResponse<ResponseRoleDto>> updateRole(@RequestBody @Valid RoleDto roleDto,@PathVariable Long id){
         ResponseRoleDto responseRoleDto = mapperUtil.map(roleService.update(roleDto,id), ResponseRoleDto.class);
-        return new ResponseEntity<>(new GenericResponse<ResponseRoleDto>(201,"success",Arrays.asList(responseRoleDto)),HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse<ResponseRoleDto>(200,"success",Arrays.asList(responseRoleDto)),HttpStatus.OK);
     }
 
 

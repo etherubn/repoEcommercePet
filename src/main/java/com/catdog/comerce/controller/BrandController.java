@@ -25,7 +25,6 @@ public class BrandController {
     @GetMapping
     public ResponseEntity<GenericResponse<ResponseBrandDto>> findAllBrands(){
         List<ResponseBrandDto> responseBrandDtos = mapperUtil.mapList(brandService.findAll(), ResponseBrandDto.class);
-
         return new ResponseEntity<>(new GenericResponse<>(200,"success", responseBrandDtos), HttpStatus.OK);
     }
 
@@ -53,7 +52,7 @@ public class BrandController {
     @PutMapping("/{id}")
     public ResponseEntity<GenericResponse<ResponseBrandDto>> updateBrand(@RequestBody @Valid BrandDto brandDto,@PathVariable Long id){
         ResponseBrandDto responseBrandDto = mapperUtil.map(brandService.update(brandDto,id), ResponseBrandDto.class);
-        return new ResponseEntity<>(new GenericResponse<ResponseBrandDto>(201,"success",Arrays.asList(responseBrandDto)),HttpStatus.CREATED);
+        return new ResponseEntity<>(new GenericResponse<ResponseBrandDto>(200,"success",Arrays.asList(responseBrandDto)),HttpStatus.OK);
     }
 
 
