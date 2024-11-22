@@ -7,17 +7,21 @@ import com.catdog.comerce.repository.RoleRepo;
 import com.catdog.comerce.repository.RepoGeneric;
 import com.catdog.comerce.service.IRoleService;
 import com.catdog.comerce.utils.MapperUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
 @Service
 public class RoleServiceImpl extends CrudServiceImpl<RoleDto, Role,Long> implements IRoleService {
-    private RoleRepo roleRepo;
+    private final RoleRepo roleRepo;
 
-    public RoleServiceImpl(MapperUtil mapperUtil) {
+    public RoleServiceImpl(MapperUtil mapperUtil, RoleRepo roleRepo) {
         super(mapperUtil);
+        this.roleRepo = roleRepo;
     }
+
 
     @Override
     protected RepoGeneric<Role, Long> getRepo() {
@@ -55,7 +59,7 @@ public class RoleServiceImpl extends CrudServiceImpl<RoleDto, Role,Long> impleme
     public RoleDto update(RoleDto roleDto, Long aLong) {
         Optional<Role> optionalRole = roleRepo.findByType(roleDto.getType());
 
-        if (optionalRole.isPresent() && optionalRole.get().getIdRole().equals(aLong)){
+        if (optionalRole.isPresent() && !optionalRole.get().getIdRole().equals(aLong)){
             throw new AlreadyExistsException(getEntityClass().getSimpleName(),"role name",roleDto.getType().getValue());
         }
 

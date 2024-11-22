@@ -39,4 +39,6 @@ public class UserDto implements Serializable {
     @Size(max = 80)
     private String password;
 
+    private RoleDto role;
+
 }

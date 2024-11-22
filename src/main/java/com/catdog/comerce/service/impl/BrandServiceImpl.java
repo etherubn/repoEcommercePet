@@ -3,6 +3,7 @@ package com.catdog.comerce.service.impl;
 import com.catdog.comerce.dto.request.BrandDto;
 import com.catdog.comerce.entity.Brand;
 import com.catdog.comerce.exception.AlreadyExistsException;
+import com.catdog.comerce.exception.NotFoundException;
 import com.catdog.comerce.repository.BrandRepo;
 import com.catdog.comerce.repository.RepoGeneric;
 import com.catdog.comerce.service.IBrandService;
@@ -13,11 +14,14 @@ import java.util.Optional;
 
 @Service
 public class BrandServiceImpl extends CrudServiceImpl<BrandDto, Brand,Long> implements IBrandService {
-    private BrandRepo brandRepo;
+    private final BrandRepo brandRepo;
 
-    public BrandServiceImpl(MapperUtil mapperUtil) {
+
+    public BrandServiceImpl(MapperUtil mapperUtil, BrandRepo brandRepo) {
         super(mapperUtil);
+        this.brandRepo = brandRepo;
     }
+
 
     @Override
     protected RepoGeneric<Brand, Long> getRepo() {
@@ -53,9 +57,10 @@ public class BrandServiceImpl extends CrudServiceImpl<BrandDto, Brand,Long> impl
 
     @Override
     public BrandDto update(BrandDto brandDto, Long aLong) {
+        brandRepo.findById(aLong).orElseThrow(()-> new NotFoundException("brand",aLong));
         Optional<Brand> optionalBrand = brandRepo.findByName(brandDto.getName());
 
-        if (optionalBrand.isPresent() && optionalBrand.get().getIdBrand().equals(aLong)){
+        if (optionalBrand.isPresent() && !optionalBrand.get().getIdBrand().equals(aLong)){
             throw new AlreadyExistsException(getEntityClass().getSimpleName(),"name",brandDto.getName());
         }
 

@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Set;
 
 
-@RequiredArgsConstructor
+
 @Service
 public class SellingServiceImpl extends CrudServiceImpl<SellingDto, Selling,Long> implements ISellingService {
     private final SellingRepo sellingRepo;
@@ -36,6 +36,13 @@ public class SellingServiceImpl extends CrudServiceImpl<SellingDto, Selling,Long
     private final UserRepo userRepo;
     private final SellingProductRepo sellingProductRepo;
 
+    public SellingServiceImpl(MapperUtil mapperUtil, SellingRepo sellingRepo, ProductRepo productRepo, UserRepo userRepo, SellingProductRepo sellingProductRepo) {
+        super(mapperUtil);
+        this.sellingRepo = sellingRepo;
+        this.productRepo = productRepo;
+        this.userRepo = userRepo;
+        this.sellingProductRepo = sellingProductRepo;
+    }
 
 
     @Override

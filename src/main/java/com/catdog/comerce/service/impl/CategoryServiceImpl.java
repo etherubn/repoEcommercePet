@@ -49,8 +49,6 @@ public class CategoryServiceImpl extends CrudServiceImpl<CategoryDto, Category,L
         }
 
         Category createdCategory = categoryRepo.save(mapperUtil.map(categoryDto, Category.class));
-
-
         return mapperUtil.map(createdCategory, CategoryDto.class);
     }
 
@@ -60,7 +58,7 @@ public class CategoryServiceImpl extends CrudServiceImpl<CategoryDto, Category,L
 
         Optional<Category> optionalCategory = categoryRepo.findByType(categoryDto.getType());
 
-        if (optionalCategory.isPresent() && optionalCategory.get().getIdCategory().equals(aLong)){
+        if (optionalCategory.isPresent() && !optionalCategory.get().getIdCategory().equals(aLong)){
             throw new AlreadyExistsException(getEntityClass().getSimpleName(),"type",categoryDto.getType().getValue());
         }
 

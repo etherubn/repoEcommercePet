@@ -23,8 +23,9 @@ public class UserServiceImpl extends CrudServiceImpl<UserDto, User,Long> impleme
     private UserRepo userRepo;
     private RoleRepo roleRepo;
 
-    public UserServiceImpl(MapperUtil mapperUtil, RoleRepo roleRepo) {
+    public UserServiceImpl(MapperUtil mapperUtil, UserRepo userRepo, RoleRepo roleRepo) {
         super(mapperUtil);
+        this.userRepo = userRepo;
         this.roleRepo = roleRepo;
     }
 
@@ -75,21 +76,21 @@ public class UserServiceImpl extends CrudServiceImpl<UserDto, User,Long> impleme
 
     @Override
     public UserDto update(UserDto userDto, Long aLong) {
-        Optional<User> optionalUser = userRepo.findByDni(userDto.getName());
+        Optional<User> optionalUser = userRepo.findByDni(userDto.getDni());
 
-        if (optionalUser.isPresent() && optionalUser.get().getIdUser().equals(aLong)){
+        if (optionalUser.isPresent() && !optionalUser.get().getIdUser().equals(aLong)){
             throw new AlreadyExistsException(getEntityClass().getSimpleName(),"dni",userDto.getDni());
         }
 
         optionalUser = userRepo.findByEmail(userDto.getEmail());
 
-        if (optionalUser.isPresent() && optionalUser.get().getIdUser().equals(aLong)){
+        if (optionalUser.isPresent() && !optionalUser.get().getIdUser().equals(aLong)){
             throw new AlreadyExistsException(getEntityClass().getSimpleName(),"email",userDto.getEmail());
         }
 
         optionalUser = userRepo.findByUsername(userDto.getUsername());
 
-        if (optionalUser.isPresent() && optionalUser.get().getIdUser().equals(aLong)){
+        if (optionalUser.isPresent() && !optionalUser.get().getIdUser().equals(aLong)){
             throw new AlreadyExistsException(getEntityClass().getSimpleName(),"username",userDto.getUsername());
         }
 
